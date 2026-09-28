@@ -1,40 +1,55 @@
 package com.example.helper.data
 
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
-class UserRepository {
-    private val _users = MutableStateFlow<List<User>>(emptyList())
-    val users: StateFlow<List<User>> = _users.asStateFlow()
+class UserRepository(private val userDao: UserDao) {
 
-    private var nextId = 1
+    fun getAllUsers(): Flow<List<User>> {
+        return userDao.getAllUsers().map { entities ->
+            entities.map { it.toUser() }
+        }
+    }
 
-    fun addUser(name: String, email: String, age: Int) {
-        val newUser = User(
-            id = nextId++,
+    fun searchUsers(query: String): Flow<List<User>> {
+        return userDao.searchUsers(query).map { entities ->
+            entities.map { it.toUser() }
+        }
+    }
+
+    suspend fun getUserById(userId: Int): User? {
+        return userDao.getUserById(userId)?.toUser()
+    }
+
+    suspend fun addUser(name: String, email: String, age: Int) {
+        val userEntity = UserEntity(
             name = name,
             email = email,
             age = age
         )
-        _users.value += newUser
+        userDao.insertUser(userEntity)
     }
 
-    fun deleteUser(userId: Int) {
-        _users.value = _users.value.filter { it.id != userId }
+    suspend fun deleteUser(userId: Int) {
+        userDao.deleteUserById(userId)
     }
 
-    fun getUserById(userId: Int): User? {
-        return _users.value.find { it.id == userId }
+    suspend fun updateUser(userId: Int, name: String, email: String, age: Int) {
+        val userEntity = UserEntity(
+            id = userId,
+            name = name,
+            email = email,
+            age = age
+        )
+        userDao.updateUser(userEntity)
     }
 
-    fun updateUser(userId: Int, name: String, email: String, age: Int) {
-        _users.value = _users.value.map { user ->
-            if (user.id == userId) {
-                user.copy(name = name, email = email, age = age)
-            } else {
-                user
-            }
-        }
+    private fun UserEntity.toUser(): User {
+        return User(
+            id = id,
+            name = name,
+            email = email,
+            age = age
+        )
     }
 }

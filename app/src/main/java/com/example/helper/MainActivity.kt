@@ -34,11 +34,14 @@ class MainActivity : ComponentActivity() {
 fun UserApp(viewModel: UserViewModel = viewModel()) {
     val navController = rememberNavController()
     val users by viewModel.users.collectAsState()
+    val searchQuery by viewModel.searchQuery.collectAsState()
 
     NavHost(navController = navController, startDestination = "userList") {
         composable("userList") {
             UserListScreen(
                 users = users,
+                searchQuery = searchQuery,
+                onSearchQueryChange = { viewModel.updateSearchQuery(it) },
                 onAddUser = { navController.navigate("addUser") },
                 onUserClick = { userId -> navController.navigate("userDetail/$userId") },
                 onDeleteUser = { userId -> viewModel.deleteUser(userId) }
