@@ -1,4 +1,4 @@
-package com.example.helper
+package com.example.helper.data
 
 data class User(
     val id: Int,

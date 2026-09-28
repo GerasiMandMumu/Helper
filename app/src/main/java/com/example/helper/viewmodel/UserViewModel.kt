@@ -1,6 +1,7 @@
-package com.example.helper
+package com.example.helper.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.example.helper.data.UserRepository
 import kotlinx.coroutines.flow.StateFlow
 
 class UserViewModel : ViewModel() {

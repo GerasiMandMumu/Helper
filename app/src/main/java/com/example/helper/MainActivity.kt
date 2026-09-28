@@ -12,6 +12,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.helper.ui.theme.HelperTheme
+import com.example.helper.ui.userlist.UserListScreen
+import com.example.helper.ui.adduser.AddUserScreen
+import com.example.helper.ui.userdetail.UserDetailScreen
+import com.example.helper.ui.edituser.EditUserScreen
+import com.example.helper.viewmodel.UserViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

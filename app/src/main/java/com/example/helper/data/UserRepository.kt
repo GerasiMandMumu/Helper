@@ -1,4 +1,4 @@
-package com.example.helper
+package com.example.helper.data
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

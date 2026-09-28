@@ -1,4 +1,4 @@
-package com.example.helper
+package com.example.helper.ui.userdetail
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons

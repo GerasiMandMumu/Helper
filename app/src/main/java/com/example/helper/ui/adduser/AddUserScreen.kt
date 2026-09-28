@@ -1,4 +1,4 @@
-package com.example.helper
+package com.example.helper.ui.adduser
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -12,19 +12,18 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditUserScreen(
-    user: User?,
+fun AddUserScreen(
     onSave: (String, String, Int) -> Unit,
     onBack: () -> Unit
 ) {
-    var name by remember { mutableStateOf(user?.name ?: "") }
-    var email by remember { mutableStateOf(user?.email ?: "") }
-    var age by remember { mutableStateOf(user?.age?.toString() ?: "") }
+    var name by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var age by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Редактировать пользователя") },
+                title = { Text("Добавить пользователя") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Назад")
