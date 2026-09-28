@@ -10,7 +10,10 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class UserViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: UserRepository
+    private val repository: UserRepository by lazy {
+        val database = AppDatabase.getDatabase(application)
+        UserRepository(database.userDao())
+    }
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
@@ -29,11 +32,6 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList()
         )
-
-    init {
-        val database = AppDatabase.getDatabase(application)
-        repository = UserRepository(database.userDao())
-    }
 
     fun updateSearchQuery(query: String) {
         _searchQuery.value = query
