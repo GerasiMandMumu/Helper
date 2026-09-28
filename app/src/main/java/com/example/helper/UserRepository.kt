@@ -17,7 +17,7 @@ class UserRepository {
             email = email,
             age = age
         )
-        _users.value = _users.value + newUser
+        _users.value += newUser
     }
 
     fun deleteUser(userId: Int) {
